@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetPulse - NetSentinel Network Dashboard (Simulated Data)</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="sidebar" id="sidebar" aria-label="Main navigation">
+  <div class="brand">
+    <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="#2dd4bf" stroke-width="2"/><path d="M4 17h6l3-8 5 14 3-6h7" fill="none" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><strong>NetSentinel</strong><span>NetPulse dashboard</span></div>
+  </div>
+  <nav>
+    <a href="#overview" data-view="overview" class="active">Overview</a>
+    <a href="#devices" data-view="devices">Devices</a>
+    <a href="#analytics" data-view="analytics">Performance analytics</a>
+    <a href="#alerts" data-view="alerts">Alerts <span class="count zero" id="navAlertCount">0</span></a>
+    <a href="#about" data-view="about">Settings &amp; info</a>
+  </nav>
+  <div class="sim-note"><span class="dot"></span> Simulated data. No real devices are monitored.</div>
+</aside>
+
+<div class="content">
+<header class="topbar">
+  <button id="menuBtn" class="menu-btn" aria-label="Toggle navigation">&#9776;</button>
+  <h1 id="viewTitle">Overview</h1>
+  <span class="badge sim">SIMULATED DATA</span>
+  <span class="clock" title="Browser clock, not a network measurement">Browser time: <time id="clock">--</time></span>
+</header>
+
+<main id="main">
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="errorBox" class="error-box" role="alert" hidden></div>
+
+  <section class="controls" aria-label="Simulation controls">
+    <span class="ctl-label">Simulation scenario: <strong id="scenarioName">normal</strong></span>
+    <div class="btns">
+      <button class="btn ok" data-action="normal">Normal Scenario</button>
+      <button class="btn warn" data-action="warning">Warning Scenario</button>
+      <button class="btn crit" data-action="critical">Critical Scenario</button>
+      <button class="btn" data-action="refresh">Refresh Metrics</button>
+      <button class="btn ghost" data-action="reset">Reset Dashboard</button>
+    </div>
+    <span class="loading" id="loading" hidden>Loading...</span>
+  </section>
+
+  <section class="view active" id="view-overview">
+    <div class="cards" id="cards"></div>
+    <div class="grid2">
+      <div class="panel"><h2>Network health score</h2>
+        <div class="health"><svg viewBox="0 0 120 120" class="ring" aria-hidden="true"><circle cx="60" cy="60" r="52" class="ring-bg"/><circle cx="60" cy="60" r="52" id="ringFg" class="ring-fg"/></svg>
+          <div class="health-txt"><b id="healthScore">--</b><span id="healthLabel">--</span></div></div>
+        <ul class="breakdown" id="breakdown"></ul>
+      </div>
+      <div class="panel"><h2>Recommendations</h2><div id="recsOverview" class="recs"></div></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h2>Latency over time</h2><div class="chart-box"><canvas id="chLatency"></canvas></div></div>
+      <div class="panel"><h2>Device status distribution</h2><div class="chart-box"><canvas id="chStatus"></canvas></div></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-devices">
+    <div class="panel">
+      <div class="filters">
+        <label>Search <input type="search" id="search" placeholder="Name, type or IP"></label>
+        <label>Status
+          <select id="statusFilter"><option value="all">All</option><option>Online</option><option>Warning</option><option>Critical</option><option>Offline</option></select></label>
+        <span class="muted" id="rowCount"></span>
+      </div>
+      <div class="table-wrap"><table>
+        <caption class="sr">Simulated network devices</caption>
+        <thead><tr><th>Device</th><th>Type</th><th>IP address</th><th>Status</th><th>CPU</th><th>Memory</th><th>Latency</th><th>Packet loss</th><th>Last updated</th></tr></thead>
+        <tbody id="deviceRows"></tbody></table></div>
+      <p class="muted">All values above are simulated. IPs are reserved documentation addresses (192.0.2.0/24).</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-analytics">
+    <div class="grid2">
+      <div class="panel"><h2>Bandwidth utilization by device</h2><div class="chart-box"><canvas id="chBandwidth"></canvas></div></div>
+      <div class="panel"><h2>CPU utilization by device</h2><div class="chart-box"><canvas id="chCpu"></canvas></div></div>
+    </div>
+    <div class="panel"><h2>Network traffic trend (inbound / outbound)</h2><div class="chart-box tall"><canvas id="chTraffic"></canvas></div></div>
+    <p class="muted" id="chartError" hidden>Charts could not load because Chart.js (CDN) is unreachable. Connect to the internet and reload; the rest of the dashboard still works.</p>
+  </section>
+
+  <section class="view" id="view-alerts">
+    <div class="panel"><h2>Active alerts</h2><div class="table-wrap"><table>
+      <thead><tr><th>Severity</th><th>Device</th><th>Description</th><th>Value</th><th>Threshold</th><th>Timestamp</th><th>Recommended action</th></tr></thead>
+      <tbody id="alertRows"></tbody></table></div></div>
+    <div class="panel"><h2>Recommendations</h2><div id="recsAlerts" class="recs"></div></div>
+  </section>
+
+  <section class="view" id="view-about">
+    <div class="panel"><h2>About this project</h2>
+      <p>NetSentinel is a simulation-based Network Management System mini-project. A Flask backend generates deterministic scenario data for six virtual devices; the browser renders it. <strong>No physical device, SNMP agent or real network is monitored.</strong></p>
+      <h2>Alert thresholds (configurable in app.py)</h2>
+      <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Warning above</th><th>Critical above</th></tr></thead><tbody id="thresholdRows"></tbody></table></div>
+      <h2>Health score bands</h2>
+      <p>90-100 Excellent &middot; 75-89 Good &middot; 50-74 Warning &middot; 0-49 Critical. Offline devices raise a critical alert and reduce the availability component.</p>
+    </div>
+  </section>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 848" width="760" font-family="Segoe UI, Arial, sans-serif">
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#2dd4bf"/></marker></defs>
+<rect width="760" height="848" fill="#0b1220"/>
+<text x="380" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#e6edf7">NetSentinel - System Architecture</text>
+<text x="380" y="54" text-anchor="middle" font-size="12" fill="#fbbf24">All device metrics are simulated; no real network devices are monitored</text>
+<rect x="70" y="70" width="620" height="66" rx="10" fill="#1e3a5f" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="380" y="98" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf7">User</text>
+<text x="380" y="119" text-anchor="middle" font-size="13" fill="#c5d2e6">Network administrator / student (browser)</text>
+<line x1="380" y1="136" x2="380" y2="163" stroke="#2dd4bf" stroke-width="2" marker-end="url(#a)"/>
+<rect x="70" y="166" width="620" height="66" rx="10" fill="#1f4d4a" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="380" y="194" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf7">Web Dashboard</text>
+<text x="380" y="215" text-anchor="middle" font-size="13" fill="#c5d2e6">HTML, CSS, JavaScript + Chart.js</text>
+<line x1="380" y1="232" x2="380" y2="259" stroke="#2dd4bf" stroke-width="2" marker-end="url(#a)"/>
+<rect x="70" y="262" width="620" height="66" rx="10" fill="#1f4d4a" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="380" y="290" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf7">Flask Application and REST API</text>
+<text x="380" y="311" text-anchor="middle" font-size="13" fill="#c5d2e6">app.py: /, /api/metrics, /api/simulate/*, /api/refresh</text>
+<line x1="380" y1="328" x2="380" y2="355" stroke="#2dd4bf" stroke-width="2" marker-end="url(#a)"/>
+<rect x="70" y="358" width="620" height="66" rx="10" fill="#4a3a1a" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="380" y="386" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf7">Network Simulation Engine</text>
+<text x="380" y="407" text-anchor="middle" font-size="13" fill="#c5d2e6">generate_devices(): deterministic scenarios + seeded jitter</text>
+<line x1="380" y1="424" x2="380" y2="451" stroke="#2dd4bf" stroke-width="2" marker-end="url(#a)"/>
+<rect x="70" y="454" width="620" height="66" rx="10" fill="#4a3a1a" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="380" y="482" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf7">Simulated Device Metrics</text>
+<text x="380" y="503" text-anchor="middle" font-size="13" fill="#c5d2e6">CPU, memory, latency, packet loss, bandwidth, traffic</text>
+<line x1="380" y1="520" x2="380" y2="547" stroke="#2dd4bf" stroke-width="2" marker-end="url(#a)"/>
+<rect x="70" y="550" width="620" height="66" rx="10" fill="#5a2a3a" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="380" y="578" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf7">Analysis Layer</text>
+<text x="380" y="599" text-anchor="middle" font-size="13" fill="#c5d2e6">Health Score Calculation  |  Alert Detection  |  Recommendation Engine</text>
+<line x1="380" y1="616" x2="380" y2="643" stroke="#2dd4bf" stroke-width="2" marker-end="url(#a)"/>
+<rect x="70" y="646" width="620" height="66" rx="10" fill="#1f4d4a" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="380" y="674" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf7">JSON API Response</text>
+<text x="380" y="695" text-anchor="middle" font-size="13" fill="#c5d2e6">{ success, message, data }</text>
+<line x1="380" y1="712" x2="380" y2="739" stroke="#2dd4bf" stroke-width="2" marker-end="url(#a)"/>
+<rect x="70" y="742" width="620" height="66" rx="10" fill="#1e3a5f" stroke="#2dd4bf" stroke-width="1.5"/>
+<text x="380" y="770" text-anchor="middle" font-size="17" font-weight="700" fill="#e6edf7">Dashboard Output</text>
+<text x="380" y="791" text-anchor="middle" font-size="13" fill="#c5d2e6">Summary Cards, Charts, Device Table, Alerts, Recommendations</text>
+</svg>
